@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>markz.robot-commander</id>
+    <name>Robot Commander</name>
+    <vendor email="mark.zeagler@outlook.com" url="https://markzeagler.com">Mark Zeagler</vendor>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <description><![CDATA[
+    Tool for executing Robot Framework tests<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <!--<actions>-->
+        <!--&lt;!&ndash; Add your actions here &ndash;&gt;-->
+        <!--<action id="markz.robot_commander.RobotCommanderToolbarFactoryFactory" class="markz.robot_commander.RobotCommanderToolbarFactoryFactory"-->
+                <!--text="Robot Commander Toolbar"-->
+                <!--description="Toolbar for the selection and execution of Robot Framework tests">-->
+            <!--&lt;!&ndash;<add-to-group group-id="Tool"/>&ndash;&gt;-->
+        <!--</action>-->
+    <!--</actions>-->
+
+    <project-components>
+        <component>
+            <implementation-class>markz.robot_commander.toolbar.RobotCommanderToolWindowFactory</implementation-class>
+        </component>
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Robot Commander" icon="/META-INF/pluginIcon.png" anchor="bottom" factoryClass="markz.robot_commander.toolbar.RobotCommanderToolWindowFactory"/>
+    </extensions>
+
+</idea-plugin>
