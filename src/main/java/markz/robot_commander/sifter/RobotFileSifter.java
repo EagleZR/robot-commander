@@ -32,7 +32,7 @@ public class RobotFileSifter {
 	private final static List<String> IGNORED_FILE_NAMES;
 
 	static {
-		fileExtensions = new String[] { ".robot" };  // TODO Move to config file
+		fileExtensions = new String[] { "robot" };  // TODO Move to config file
 		IGNORED_FILE_NAMES = new LinkedList<>( Arrays.asList( "__init__.robot" ) );  // TODO Move to config file
 	}
 
@@ -43,7 +43,8 @@ public class RobotFileSifter {
 				returnList.addAll( getRobotFiles( child ) );
 			} else {
 				for ( String fileExtension : fileExtensions ) {
-					if ( child.getName().endsWith( fileExtension ) && !IGNORED_FILE_NAMES.contains( child.getName() ) ) {
+					if ( child.getName().endsWith( "." + fileExtension ) && !IGNORED_FILE_NAMES
+							.contains( child.getName() ) ) {
 						returnList.add( child );
 					}
 				}
