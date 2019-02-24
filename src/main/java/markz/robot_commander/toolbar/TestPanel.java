@@ -32,10 +32,16 @@ public class TestPanel extends JPanel {
 	private static TextField argumentsTextField;
 	private static TextField includeTagsTextField;
 	private static TextField excludeTagsTextField;
+	private static int vgap = 10;  // TODO Set via config file
+	private static int hgap = 5;   // TODO Set via config file
 
 	private TestPanel() {
 		// Configuration
-		this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
+		GridLayout layout = new GridLayout( 3, 1 );
+		this.setLayout( layout );
+		this.setMaximumSize( new Dimension( 1000000, 120 ) );
+		layout.setHgap( hgap );
+		layout.setVgap( vgap );
 		// Initialize components
 		createAndAddButtonPanel();
 		createAndAddOptionPanel();
@@ -91,7 +97,7 @@ public class TestPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddStopButton() {
-			stopButton = new JButton( "Stop" );  // TODO Find how to reference IntelliJ's start button
+			stopButton = new JButton( "Stop" );  // TODO Find how to reference IntelliJ's stop button
 			stopButton.setVerticalTextPosition( AbstractButton.CENTER );
 			stopButton.setHorizontalAlignment( AbstractButton.LEADING );
 			stopButton.addActionListener( e -> {
@@ -104,7 +110,10 @@ public class TestPanel extends JPanel {
 	private static class OptionPanel extends JPanel {
 		private OptionPanel() {
 			// Configuration
-			this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
+			GridLayout layout = new GridLayout( 3, 1 );
+			this.setLayout( layout );
+			layout.setHgap( hgap );
+			layout.setVgap( vgap );
 			// Initialize components
 			createAndAddArgumentsLabel();
 			createAndAddArgumentsTextField();
@@ -137,11 +146,12 @@ public class TestPanel extends JPanel {
 	private static class TagsPane extends JPanel {
 		private TagsPane() {
 			// Configuration
-			this.setLayout( new GridLayout() );
+			this.setLayout( new GridLayout( 2, 2 ) );
+			this.setMaximumSize( new Dimension( 1000000, 40 ) );
 			// Initialize components
 			createAndAddIncludeTagsLabel();
-			createAndAddIncludeTagsTextField();
 			createAndAddExcludeTagsLabel();
+			createAndAddIncludeTagsTextField();
 			createAndAddExcludeTagsTextField();
 		}
 
@@ -176,7 +186,7 @@ public class TestPanel extends JPanel {
 
 	private static class TestTreePanel extends JPanel {
 		private TestTreePanel() {
-
+			this.setMinimumSize( new Dimension( 1000000, 300 ) );
 		}
 	}
 

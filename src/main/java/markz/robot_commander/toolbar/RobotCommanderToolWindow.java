@@ -30,6 +30,7 @@ public class RobotCommanderToolWindow extends JPanel {
 
 	private RobotCommanderToolWindow() {
 		super( new BorderLayout() );
+		this.add( TestPanel.getInstance() );
 	}
 
 	static RobotCommanderToolWindow getInstance() {
