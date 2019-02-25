@@ -33,7 +33,7 @@ public class TestPaneTest {
 	}
 
 	private static RobotCommanderTestPanel getTestPane() {
-		return RobotCommanderTestPanel.getInstance();
+		return new RobotCommanderTestPanel();
 	}
 
 }
