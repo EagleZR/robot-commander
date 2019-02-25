@@ -32,8 +32,8 @@ public class TestPaneTest {
 		frame.setVisible( true );
 	}
 
-	private static TestPanel getTestPane() {
-		return TestPanel.getInstance();
+	private static RobotCommanderTestPanel getTestPane() {
+		return RobotCommanderTestPanel.getInstance();
 	}
 
 }

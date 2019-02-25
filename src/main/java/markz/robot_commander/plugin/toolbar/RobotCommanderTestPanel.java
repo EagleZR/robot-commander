@@ -25,17 +25,17 @@ import java.awt.*;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class TestPanel extends JPanel {
+public class RobotCommanderTestPanel extends JPanel {
 
 	private static final Object LOCK = new Object();
-	private static TestPanel instance;
+	private static RobotCommanderTestPanel instance;
 	private static TextField argumentsTextField;
 	private static TextField includeTagsTextField;
 	private static TextField excludeTagsTextField;
 	private static int vgap = 10;  // TODO Set via config file
 	private static int hgap = 5;   // TODO Set via config file
 
-	private TestPanel() {
+	private RobotCommanderTestPanel() {
 		// Configuration
 		GridLayout layout = new GridLayout( 3, 1 );
 		this.setLayout( layout );
@@ -48,11 +48,11 @@ public class TestPanel extends JPanel {
 		createAndAddTestTreePanel();
 	}
 
-	public static TestPanel getInstance() {
+	public static RobotCommanderTestPanel getInstance() {
 		if ( instance == null ) {
 			synchronized ( LOCK ) {
 				if ( instance == null ) {
-					instance = new TestPanel();
+					instance = new RobotCommanderTestPanel();
 				}
 			}
 		}
