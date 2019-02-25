@@ -14,26 +14,34 @@
  * limitations under the License.
  */
 
-package markz.robot_commander.toolbar;
+package markz.robot_commander.plugin.toolbar;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Mark Zeagler
  * @version 1.0
  */
-public class TestPaneTest {
+public class RobotCommanderToolWindow extends JPanel {
 
-	public static void main( String[] args ) {
-		JFrame frame = new JFrame( "TestPaneTest Test" );
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		frame.getContentPane().add( getTestPane() );
-		frame.setSize( 800, 500 );
-		frame.setVisible( true );
+	private static final Object lock = new Object();
+	private static RobotCommanderToolWindow instance;
+
+	private RobotCommanderToolWindow() {
+		super( new BorderLayout() );
+		this.add( TestPanel.getInstance() );
 	}
 
-	private static TestPanel getTestPane() {
-		return TestPanel.getInstance();
+	static RobotCommanderToolWindow getInstance() {
+		if ( instance == null ) {
+			synchronized ( lock ) {
+				if ( instance == null ) {
+					instance = new RobotCommanderToolWindow();
+				}
+			}
+		}
+		return instance;
 	}
 
 }

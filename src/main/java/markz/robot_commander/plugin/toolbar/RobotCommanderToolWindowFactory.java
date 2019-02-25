@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package markz.robot_commander.toolbar;
+package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
