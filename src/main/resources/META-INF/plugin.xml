@@ -47,13 +47,13 @@
 
     <project-components>
         <component>
-            <implementation-class>markz.robot_commander.toolbar.RobotCommanderToolWindowFactory</implementation-class>
+            <implementation-class>markz.robot_commander.plugin.toolbar.RobotCommanderToolWindowFactory</implementation-class>
         </component>
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Robot Commander" icon="/META-INF/pluginIcon_16x16.svg" anchor="bottom"
-                    factoryClass="markz.robot_commander.toolbar.RobotCommanderToolWindowFactory"/>
+                    factoryClass="markz.robot_commander.plugin.toolbar.RobotCommanderToolWindowFactory"/>
     </extensions>
 
 </idea-plugin>
