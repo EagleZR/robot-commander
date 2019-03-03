@@ -25,13 +25,11 @@ import java.awt.*;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RobotCommanderOptionPanel extends JPanel {
+public class OptionPanel extends JPanel {
 
-	private static int vgap = 10;  // TODO Set via config file
-	private static int hgap = 5;   // TODO Set via config file
 	private static boolean debugColors = false;   // TODO Set via config file
 
-	public RobotCommanderOptionPanel() {
+	public OptionPanel() {
 		super( new GridLayout( 2, 1 ) );
 
 		if ( debugColors ) {
@@ -41,8 +39,8 @@ public class RobotCommanderOptionPanel extends JPanel {
 		// Configuration
 
 		// Initialize components
-		createAndAddArgumentsPanel();
 		createAndAddTagsPanel();
+		createAndAddArgumentsPanel();
 	}
 
 	private void createAndAddTagsPanel() {
@@ -77,7 +75,7 @@ public class RobotCommanderOptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddArgumentsLabel() {
-			Label argumentsLabel = new Label( "Arguments:" );
+			Label argumentsLabel = new Label( "Additional Arguments:" );
 			this.add( argumentsLabel );
 		}
 

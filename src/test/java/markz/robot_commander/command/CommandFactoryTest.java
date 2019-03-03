@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * @author Mark Zeagler
  * @version 1.0
  */
-class CommandBuilderTest {
+class CommandFactoryTest {
 
 	@BeforeEach
 

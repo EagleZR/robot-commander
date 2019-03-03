@@ -28,13 +28,13 @@ import java.awt.event.ActionListener;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RobotCommanderButtonPanel extends JPanel {
+public class ButtonPanel extends JPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
 	private final JButton startButton;
 	private final JButton stopButton;
 
-	public RobotCommanderButtonPanel() {
+	public ButtonPanel() {
 		super( new FlowLayout( FlowLayout.LEFT ) );
 
 		if ( debugColors ) {

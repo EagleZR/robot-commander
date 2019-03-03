@@ -18,34 +18,44 @@ package markz.robot_commander.plugin.toolbar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 /**
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RobotCommanderToolWindow extends JPanel {
+public class ToolWindow extends JPanel {
 
 	private static final Object lock = new Object();
-	private static RobotCommanderToolWindow instance;
+	private static ToolWindow instance;
+	private OptionPanel optionPanel;
+	private TestPanel testPanel;
 
-	private RobotCommanderToolWindow() {
+	private ToolWindow( File file ) {
 		super( new BorderLayout() );
-		this.add( new RobotCommanderButtonPanel(), BorderLayout.NORTH );
+		this.add( new ButtonPanel(), BorderLayout.NORTH );
 		JPanel tempPanel = new JPanel( new BorderLayout() );
-		tempPanel.add( new RobotCommanderOptionPanel(), BorderLayout.NORTH );
-		tempPanel.add( new RobotCommanderTestPanel(), BorderLayout.CENTER );
+		this.optionPanel = new OptionPanel();
+		tempPanel.add( this.optionPanel, BorderLayout.NORTH );
+		this.testPanel = new TestPanel( file );
+		tempPanel.add( this.testPanel, BorderLayout.CENTER );
 		this.add( tempPanel, BorderLayout.CENTER );
 	}
 
-	public static RobotCommanderToolWindow getInstance() {
+	public static ToolWindow getInstance( File file ) {
 		if ( instance == null ) {
 			synchronized ( lock ) {
 				if ( instance == null ) {
-					instance = new RobotCommanderToolWindow();
+					instance = new ToolWindow( file );
 				}
 			}
 		}
+		instance.updateWorkingDirectory( file );
 		return instance;
+	}
+
+	public void updateWorkingDirectory( File workingDirectory ) {
+		this.testPanel.updateWorkingDirectory( workingDirectory );
 	}
 
 }

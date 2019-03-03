@@ -24,7 +24,7 @@ import java.util.List;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class CommandBuilder {
+public class CommandFactory implements CommandFactoryInterface {
 
 	private File workingDirectory;
 	private List<String> includedTags;
@@ -32,7 +32,7 @@ public class CommandBuilder {
 	private List<String> tests;
 	private List<String> suites;
 
-	public CommandBuilder() {
+	public CommandFactory() {
 		workingDirectory = new File( "" ).getAbsoluteFile();
 	}
 

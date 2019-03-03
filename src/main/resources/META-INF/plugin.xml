@@ -34,6 +34,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <configurationType implementation="markz.robot_commander.plugin.configuration.ConfigurationType"/>
     </extensions>
 
     <!--<actions>-->
@@ -47,13 +48,13 @@
 
     <project-components>
         <component>
-            <implementation-class>markz.robot_commander.plugin.toolbar.RobotCommanderToolWindowFactory</implementation-class>
+            <implementation-class>markz.robot_commander.plugin.toolbar.ToolWindowFactory</implementation-class>
         </component>
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Robot Commander" icon="/META-INF/pluginIcon_16x16.svg" anchor="bottom"
-                    factoryClass="markz.robot_commander.plugin.toolbar.RobotCommanderToolWindowFactory"/>
+                    factoryClass="markz.robot_commander.plugin.toolbar.ToolWindowFactory"/>
     </extensions>
 
 </idea-plugin>

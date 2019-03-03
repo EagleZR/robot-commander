@@ -17,6 +17,7 @@
 package markz.robot_commander.plugin.toolbar;
 
 import javax.swing.*;
+import java.io.File;
 
 /**
  * @author Mark Zeagler
@@ -32,8 +33,8 @@ public class TestPaneTest {
 		frame.setVisible( true );
 	}
 
-	private static RobotCommanderTestPanel getTestPane() {
-		return new RobotCommanderTestPanel();
+	private static TestPanel getTestPane() {
+		return new TestPanel( new File( "" ) );
 	}
 
 }
