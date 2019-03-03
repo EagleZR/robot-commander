@@ -18,6 +18,7 @@ package markz.robot_commander.command;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,18 +27,59 @@ import java.util.List;
  */
 public class CommandFactory implements CommandFactoryInterface {
 
+	public static final CommonCommandNames DEFAULT_COMMAND_NAME = CommonCommandNames.ROBOT;
+
 	private File workingDirectory;
-	private List<String> includedTags;
-	private List<String> excludedTags;
-	private List<String> tests;
-	private List<String> suites;
+	private String commandName = DEFAULT_COMMAND_NAME.toString();
+	private List<String> includedTags = new LinkedList<>();
+	private List<String> excludedTags = new LinkedList<>();
+	private List<String> tests = new LinkedList<>();
+	private List<String> suites = new LinkedList<>();
 
 	public CommandFactory() {
 		workingDirectory = new File( "" ).getAbsoluteFile();
 	}
 
+	@Override public String getCommandName() {
+		return commandName;
+	}
+
+	@Override public void setCommandName( String commandName ) {
+		this.commandName = commandName;
+	}
+
 	public String generateCommand() {
-		return "robot " + this.workingDirectory.getAbsolutePath();
+		StringBuilder command = new StringBuilder();
+		command.append( this.commandName ).append( " " );
+		addIncludedTags( command );
+		addExcludedTags( command );
+		addTests( command );
+		addSuites( command );
+		return command.toString();
+	}
+
+	private void addIncludedTags( StringBuilder s ) {
+		for ( String includedTag : this.includedTags ) {
+			s.append( "-i " ).append( includedTag ).append( " " );
+		}
+	}
+
+	private void addExcludedTags( StringBuilder s ) {
+		for ( String excludedTag : this.excludedTags ) {
+			s.append( "-e " ).append( excludedTag ).append( " " );
+		}
+	}
+
+	private void addTests( StringBuilder s ) {
+		for ( String test : this.tests ) {
+			s.append( "-t " ).append( test ).append( " " );
+		}
+	}
+
+	private void addSuites( StringBuilder s ) {
+		for ( String suite : this.suites ) {
+			s.append( "-s " ).append( suite ).append( " " );
+		}
 	}
 
 	public File getWorkingDirectory() {
@@ -64,25 +106,39 @@ public class CommandFactory implements CommandFactoryInterface {
 		return Collections.synchronizedList( this.suites );
 	}
 
-	private String generateIncludedTags() {
-		if ( this.includedTags == null ) {
-			return "";
-		}
-		StringBuilder stringBuilder = new StringBuilder();
-		for ( String tag : this.includedTags ) {
-			stringBuilder.append( " -i " ).append( tag );
-		}
-		return stringBuilder.toString();
-	}
+	/**
+	 * Commonly used Robot Framework commands
+	 */
+	public enum CommonCommandNames {
 
-	private String generateExcludedTags() {
-		if ( this.excludedTags == null ) {
-			return "";
+		/**
+		 * Python-specific command. Soon to be deprecated by Robot Framework.
+		 */
+		PYBOT( "pybot" ),
+
+		/**
+		 * Java-specific command. Soon to be deprecated by Robot Framework.
+		 */
+		JYBOT( "jybot" ),
+
+		/**
+		 * Iron Python-specific command. Soon to be deprecated by Robot Framework.
+		 */
+		IPYBOT( "ipybot" ),
+
+		/**
+		 * Generic command. This is the approved way to run the tests.
+		 */
+		ROBOT( "robot" );
+
+		private String name;
+
+		CommonCommandNames( String name ) {
+			this.name = name;
 		}
-		StringBuilder stringBuilder = new StringBuilder();
-		for ( String tag : this.excludedTags ) {
-			stringBuilder.append( " -e " ).append( tag );
-		}
-		return stringBuilder.toString();
-	}
+
+		@Override public String toString() {
+			return this.name;
+		}}
+
 }

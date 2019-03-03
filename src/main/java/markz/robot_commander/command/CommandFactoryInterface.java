@@ -28,6 +28,21 @@ import java.util.List;
 public interface CommandFactoryInterface {
 
 	/**
+	 * Retrieves the name of the command which will be used when generating the CLI command.
+	 *
+	 * @return The name of the command to be executed.
+	 */
+	String getCommandName();
+
+	/**
+	 * Sets the name of the command to be executed. Possible examples include "robot" or "pybot", though custom commands
+	 * may be created and used.
+	 *
+	 * @param commandName The name of the command which will be used in the CLI command.
+	 */
+	void setCommandName( String commandName );
+
+	/**
 	 * Generates the command to be executed. With Robot Framework installed an the path set, this String could be pasted
 	 * into the terminal and executed.
 	 *

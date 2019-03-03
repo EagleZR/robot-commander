@@ -66,9 +66,17 @@ public class RunConfiguration extends LocatableConfigurationBase implements Comm
 	 * @return the RunProfileState describing the process which is about to be started, or null if it's impossible to
 	 * start the process.
 	 */
-	@Nullable @Override public com.intellij.execution.configurations.RunProfileState getState( @NotNull Executor executor,
-			@NotNull ExecutionEnvironment environment ) throws ExecutionException {
+	@Nullable @Override public com.intellij.execution.configurations.RunProfileState getState(
+			@NotNull Executor executor, @NotNull ExecutionEnvironment environment ) throws ExecutionException {
 		return new RunProfileState();
+	}
+
+	@Override public String getCommandName() {
+		return this.factory.getCommandName();
+	}
+
+	@Override public void setCommandName( String commandName ) {
+		this.factory.setCommandName( commandName );
 	}
 
 	@Override public String generateCommand() {
