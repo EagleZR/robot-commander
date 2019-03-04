@@ -28,6 +28,9 @@ import java.awt.*;
 public class OptionPanel extends JPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
+	private TextField argumentsTextField;
+	private TextField includeTagsTextField;
+	private TextField excludeTagsTextField;
 
 	public OptionPanel() {
 		super( new GridLayout( 2, 1 ) );
@@ -53,9 +56,19 @@ public class OptionPanel extends JPanel {
 		this.add( argumentsPanel );
 	}
 
-	private static class ArgumentsPanel extends JPanel {
+	public String getArguments() {
+		return this.argumentsTextField.getText();
+	}
 
-		private TextField argumentsTextField;
+	public String getExcludedTags() {
+		return this.excludeTagsTextField.getText();
+	}
+
+	public String getIncludedTags() {
+		return this.includeTagsTextField.getText();
+	}
+
+	private class ArgumentsPanel extends JPanel {
 
 		private ArgumentsPanel() {
 			if ( debugColors ) {
@@ -64,8 +77,8 @@ public class OptionPanel extends JPanel {
 
 			// Configuration
 			GridLayout layout = new GridLayout( 2, 1 );
-//			layout.setHgap( hgap );
-//			layout.setVgap( vgap );
+			//			layout.setHgap( hgap );
+			//			layout.setVgap( vgap );
 			this.setLayout( layout );
 
 			// Initialize components
@@ -90,10 +103,7 @@ public class OptionPanel extends JPanel {
 		}
 	}
 
-	private static class TagsPanel extends JPanel {
-
-		private TextField includeTagsTextField;
-		private TextField excludeTagsTextField;
+	private class TagsPanel extends JPanel {
 
 		private TagsPanel() {
 			if ( debugColors ) {
@@ -101,8 +111,8 @@ public class OptionPanel extends JPanel {
 			}
 			// Configuration
 			GridLayout layout = new GridLayout( 2, 2 );
-//			layout.setHgap( hgap );
-//			layout.setVgap( vgap );
+			//			layout.setHgap( hgap );
+			//			layout.setVgap( vgap );
 			this.setLayout( layout );
 			this.setMaximumSize( new Dimension( 1000000, 40 ) );
 

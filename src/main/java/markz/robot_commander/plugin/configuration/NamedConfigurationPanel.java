@@ -16,8 +16,9 @@
 
 package markz.robot_commander.plugin.configuration;
 
-import markz.robot_commander.plugin.toolbar.OptionPanel;
-import markz.robot_commander.plugin.toolbar.TestPanel;
+import markz.robot_commander.command.CommandFactoryInterface;
+import markz.robot_commander.command.ConfigurationApplicator;
+import markz.robot_commander.plugin.toolbar.BaseConfigurationPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,26 +28,25 @@ import java.io.File;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class ConfigurationPanel extends JPanel {
+public class NamedConfigurationPanel extends JPanel implements ConfigurationApplicator {
 
 	private NamePanel namePanel;
-	private OptionPanel optionPanel;
-	private TestPanel testPanel;
+	private BaseConfigurationPanel baseConfigurationPanel;
 
-	public ConfigurationPanel( File file ) {
+	public NamedConfigurationPanel( File file ) {
 		super( new BorderLayout() );
 		this.namePanel = new NamePanel();
 		this.add( namePanel, BorderLayout.NORTH );
-		JPanel tempPanel = new JPanel( new BorderLayout() );
-		this.optionPanel = new OptionPanel();
-		tempPanel.add( this.optionPanel, BorderLayout.NORTH );
-		this.testPanel = new TestPanel( file );
-		tempPanel.add( this.testPanel, BorderLayout.CENTER );
-		this.add( tempPanel, BorderLayout.CENTER );
+		this.baseConfigurationPanel = new BaseConfigurationPanel( file );
+		this.add( baseConfigurationPanel, BorderLayout.CENTER );
 	}
 
 	public void updateWorkingDirectory( File workingDirectory ) {
-		this.testPanel.updateWorkingDirectory( workingDirectory );
+		this.baseConfigurationPanel.updateWorkingDirectory( workingDirectory );
+	}
+
+	@Override public void applyConfiguration( CommandFactoryInterface factory ) {
+		this.baseConfigurationPanel.applyConfiguration( factory );
 	}
 
 	private class NamePanel extends JPanel {

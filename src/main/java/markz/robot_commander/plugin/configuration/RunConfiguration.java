@@ -20,10 +20,13 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
+import com.intellij.execution.configurations.RefactoringListenerProvider;
 import com.intellij.execution.impl.CheckableRunConfigurationEditor;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
+import com.intellij.refactoring.listeners.RefactoringElementListener;
 import markz.robot_commander.command.CommandFactory;
 import markz.robot_commander.command.CommandFactoryInterface;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +39,8 @@ import java.util.List;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RunConfiguration extends LocatableConfigurationBase implements CommandFactoryInterface {
+public class RunConfiguration extends LocatableConfigurationBase implements CommandFactoryInterface,
+		RefactoringListenerProvider {
 
 	private CommandFactory factory;
 
@@ -105,5 +109,16 @@ public class RunConfiguration extends LocatableConfigurationBase implements Comm
 
 	@Override public List<String> getSuites() {
 		return this.factory.getSuites();
+	}
+
+	/**
+	 * Returns a listener to handle a rename or move refactoring of the specified PSI element.
+	 *
+	 * @param element the element on which a refactoring was invoked.
+	 * @return the listener to handle the refactoring, or null if the run configuration doesn't care about refactoring
+	 * of this element.
+	 */
+	@Nullable @Override public RefactoringElementListener getRefactoringElementListener( PsiElement element ) {
+		return null;  // TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#refactoring-support
 	}
 }

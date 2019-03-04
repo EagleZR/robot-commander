@@ -28,18 +28,13 @@ public class ToolWindow extends JPanel {
 
 	private static final Object lock = new Object();
 	private static ToolWindow instance;
-	private OptionPanel optionPanel;
-	private TestPanel testPanel;
+	private BaseConfigurationPanel baseConfigurationPanel;
 
 	private ToolWindow( File file ) {
 		super( new BorderLayout() );
 		this.add( new ButtonPanel(), BorderLayout.NORTH );
-		JPanel tempPanel = new JPanel( new BorderLayout() );
-		this.optionPanel = new OptionPanel();
-		tempPanel.add( this.optionPanel, BorderLayout.NORTH );
-		this.testPanel = new TestPanel( file );
-		tempPanel.add( this.testPanel, BorderLayout.CENTER );
-		this.add( tempPanel, BorderLayout.CENTER );
+		this.baseConfigurationPanel = new BaseConfigurationPanel( file );
+		this.add( this.baseConfigurationPanel, BorderLayout.CENTER );
 	}
 
 	public static ToolWindow getInstance( File file ) {
@@ -55,7 +50,7 @@ public class ToolWindow extends JPanel {
 	}
 
 	public void updateWorkingDirectory( File workingDirectory ) {
-		this.testPanel.updateWorkingDirectory( workingDirectory );
+		this.baseConfigurationPanel.updateWorkingDirectory( workingDirectory );
 	}
 
 }

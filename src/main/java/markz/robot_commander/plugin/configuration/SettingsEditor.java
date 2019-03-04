@@ -35,19 +35,18 @@ public class SettingsEditor extends com.intellij.openapi.options.SettingsEditor<
 
 	private static final Object LOCK = new Object();
 	private Project project;
-	private ConfigurationPanel settingsPanel;
+	private NamedConfigurationPanel settingsPanel;
 
 	public SettingsEditor( Project project ) {
 		this.project = project;
 	}
 
 	@Override protected void resetEditorFrom( @NotNull RunConfiguration s ) {
-
+		// TODO Apply the configuration to the Panel components
 	}
 
 	@Override protected void applyEditorTo( @NotNull RunConfiguration s ) throws ConfigurationException {
-
-		s.getExcludedTags();
+		this.settingsPanel.applyConfiguration( s );
 	}
 
 	@NotNull @Override protected JComponent createEditor() {
@@ -58,7 +57,7 @@ public class SettingsEditor extends com.intellij.openapi.options.SettingsEditor<
 		if ( this.settingsPanel == null ) {
 			synchronized ( LOCK ) {
 				if ( this.settingsPanel == null ) {
-					this.settingsPanel = new ConfigurationPanel( file );
+					this.settingsPanel = new NamedConfigurationPanel( file );
 				}
 			}
 		}
