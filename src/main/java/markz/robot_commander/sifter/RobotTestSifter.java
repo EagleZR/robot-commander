@@ -32,12 +32,16 @@ import java.util.regex.Pattern;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RobotTestSifter {
+public final class RobotTestSifter {
 
 	private static final String TEST_SECTION_PATTERN_TEXT = "(\\*{3} Test Cases \\*{3}(?:[\\s\\S^](?!\\*\\*\\*))*)";
 	private static final String TEST_NAME_PATTERN_TEXT = "\\n([a-zA-Z].*)";
 	private static final Pattern TEST_SECTION_PATTERN = Pattern.compile( TEST_SECTION_PATTERN_TEXT );
 	private static final Pattern TEST_NAME_PATTERN = Pattern.compile( TEST_NAME_PATTERN_TEXT );
+
+	private RobotTestSifter() {
+
+	}
 
 	public static Map<String, List<String>> getTestFileMap( List<File> testFiles ) throws IOException {
 		Map<String, List<String>> testFileMap = new HashMap<>();
