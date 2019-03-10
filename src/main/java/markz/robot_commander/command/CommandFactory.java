@@ -50,35 +50,36 @@ public class CommandFactory implements CommandFactoryInterface {
 
 	public String generateCommand() {
 		StringBuilder command = new StringBuilder();
-		command.append( this.commandName ).append( " " );
+		command.append( this.commandName );
 		addIncludedTags( command );
 		addExcludedTags( command );
 		addTests( command );
 		addSuites( command );
+		command.append( " " ).append( workingDirectory.getAbsolutePath() );
 		return command.toString();
 	}
 
 	private void addIncludedTags( StringBuilder s ) {
 		for ( String includedTag : this.includedTags ) {
-			s.append( "-i " ).append( includedTag ).append( " " );
+			s.append( " -i " ).append( includedTag );
 		}
 	}
 
 	private void addExcludedTags( StringBuilder s ) {
 		for ( String excludedTag : this.excludedTags ) {
-			s.append( "-e " ).append( excludedTag ).append( " " );
+			s.append( " -e " ).append( excludedTag );
 		}
 	}
 
 	private void addTests( StringBuilder s ) {
 		for ( String test : this.tests ) {
-			s.append( "-t " ).append( test ).append( " " );
+			s.append( " -t " ).append( test );
 		}
 	}
 
 	private void addSuites( StringBuilder s ) {
 		for ( String suite : this.suites ) {
-			s.append( "-s " ).append( suite ).append( " " );
+			s.append( " -s " ).append( suite );
 		}
 	}
 
