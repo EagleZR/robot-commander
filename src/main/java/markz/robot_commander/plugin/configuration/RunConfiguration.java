@@ -16,7 +16,6 @@
 
 package markz.robot_commander.plugin.configuration;
 
-import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
@@ -39,8 +38,8 @@ import java.util.List;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RunConfiguration extends LocatableConfigurationBase implements CommandFactoryInterface,
-		RefactoringListenerProvider {
+public class RunConfiguration extends LocatableConfigurationBase
+		implements CommandFactoryInterface, RefactoringListenerProvider {
 
 	private CommandFactory factory;
 
@@ -58,7 +57,7 @@ public class RunConfiguration extends LocatableConfigurationBase implements Comm
 	 *
 	 * @return the settings editor component.
 	 */
-	@NotNull @Override public com.intellij.openapi.options.SettingsEditor getConfigurationEditor() {
+	@NotNull @Override public com.intellij.openapi.options.SettingsEditor<RunConfiguration> getConfigurationEditor() {
 		return new SettingsEditor( this.getProject() );
 	}
 
@@ -71,8 +70,8 @@ public class RunConfiguration extends LocatableConfigurationBase implements Comm
 	 * start the process.
 	 */
 	@Nullable @Override public com.intellij.execution.configurations.RunProfileState getState(
-			@NotNull Executor executor, @NotNull ExecutionEnvironment environment ) throws ExecutionException {
-		return new RunProfileState();
+			@NotNull Executor executor, @NotNull ExecutionEnvironment environment ) {
+		return new RunProfileState( environment, this );
 	}
 
 	@Override public String getCommandName() {

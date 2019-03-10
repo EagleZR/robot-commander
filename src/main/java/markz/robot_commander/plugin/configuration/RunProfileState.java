@@ -16,31 +16,40 @@
 
 package markz.robot_commander.plugin.configuration;
 
-import com.intellij.execution.DefaultExecutionResult;
 import com.intellij.execution.ExecutionException;
-import com.intellij.execution.ExecutionResult;
-import com.intellij.execution.Executor;
-import com.intellij.execution.runners.ProgramRunner;
+import com.intellij.execution.configurations.CommandLineState;
+import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.process.OSProcessHandler;
+import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.runners.ExecutionEnvironment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RunProfileState implements com.intellij.execution.configurations.RunProfileState {
+public class RunProfileState extends CommandLineState {
+
+	private final RunConfiguration runConfiguration;
+	private GeneralCommandLine generalCommandLine;
+
+	protected RunProfileState( ExecutionEnvironment environment, RunConfiguration runConfiguration ) {
+		super( environment );
+		this.runConfiguration = runConfiguration;
+	}
 
 	/**
 	 * Starts the process.
 	 *
-	 * @param executor the executor used to start up the process.
-	 * @param runner   the program runner used to start up the process.
-	 * @return the result (normally an instance of {@link DefaultExecutionResult}), containing a process handler and a
-	 * console attached to it.
-	 * @throws ExecutionException if the execution has failed.
+	 * @return the handler for the running process
+	 * @throws ExecutionException if the execution failed.
+	 * @see GeneralCommandLine
+	 * @see OSProcessHandler
 	 */
-	@Nullable @Override public ExecutionResult execute( Executor executor, @NotNull ProgramRunner runner )
-			throws ExecutionException {
-		return null; // TODO Do something
+	@NotNull @Override protected ProcessHandler startProcess() throws ExecutionException {
+		this.generalCommandLine = new GeneralCommandLine( this.runConfiguration.generateCommand() );
+
+		return new OSProcessHandler( this.generalCommandLine.createProcess(),
+				this.runConfiguration.generateCommand() );
 	}
 }
