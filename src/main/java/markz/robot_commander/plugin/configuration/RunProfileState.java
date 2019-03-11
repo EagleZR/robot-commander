@@ -49,7 +49,6 @@ public class RunProfileState extends CommandLineState {
 	@NotNull @Override protected ProcessHandler startProcess() throws ExecutionException {
 		this.generalCommandLine = new GeneralCommandLine( this.runConfiguration.generateCommand() );
 
-		return new OSProcessHandler( this.generalCommandLine.createProcess(),
-				this.runConfiguration.generateCommand() );
+		return new OSProcessHandler( this.generalCommandLine.createProcess(), this.runConfiguration.generateCommand() );
 	}
 }
