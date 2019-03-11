@@ -20,6 +20,7 @@
     <vendor email="mark.zeagler@outlook.com" url="https://markzeagler.com">Mark Zeagler</vendor>
 
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.millennialmedia.intellibot</depends>
 
     <description><![CDATA[
     Tool for executing Robot Framework tests<br>
