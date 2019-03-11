@@ -57,29 +57,21 @@ public class RunConfigurationProducer
 		PsiElement element = sourceElement.get();
 		// TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
 		try {
+			// If it's a robot test
+			if ( configureRobotTest( configuration, element ) ) {
+				return true;
+			}
+
 			// If it's a robot file
-			File file;
-			if ( ( file = isFile( element ) ) != null ) {
-				if ( file.isFile() && isTestFile( file ) ) {
-					String name = file.getName();
-					configuration.setWorkingDirectory( file );
-					configuration.setName( name );
-					// TODO Set up rest of configuration
-					return true;
-				}
+			if ( configureRobotFile( configuration, element ) ) {
+				return true;
 			}
+
 			// If it's a robot suite
-			File dir;
-			if ( ( dir = isDirectory( element ) ) != null ) {
-				if ( isTestSuite( dir ) ) {
-					configuration.setWorkingDirectory( dir );
-					configuration.setName( dir.getName() );
-					// TODO Set up rest of configuration
-					return true;
-				}
+			if ( configureRobotSuite( configuration, element ) ) {
+				return true;
 			}
-			// TODO Check for individual test name, too
-			System.out.println( "Check for individual tests" );
+
 		} catch ( Exception e ) {
 			e.printStackTrace();
 			return false;
@@ -97,6 +89,76 @@ public class RunConfigurationProducer
 	@Override public boolean isConfigurationFromContext( RunConfiguration configuration,
 			ConfigurationContext context ) {
 		return false;  // TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
+	}
+
+	/**
+	 * Configures a {@link RunConfiguration} for an individual Robot test if possible
+	 *
+	 * @param configuration
+	 * @param element
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean configureRobotTest( RunConfiguration configuration, PsiElement element ) throws IOException {
+		File parentFile = isFile( element.getParent() );
+
+		if ( parentFile != null ) {
+			for ( String testName : RobotTestSifter.getFileTests( parentFile ) ) {
+				if ( testName.trim().equals( element.getText().trim() ) ) {
+					configuration.setWorkingDirectory( parentFile );
+					configuration.setName(
+							getRobotName( parentFile ) + "." + testName );  // TODO Add whole suite path to name
+					// TODO Set up rest of configuration
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Configures a {@link RunConfiguration} for an individual Robot test file if possible
+	 *
+	 * @param configuration
+	 * @param element
+	 * @return
+	 */
+	private boolean configureRobotFile( RunConfiguration configuration, PsiElement element ) {
+		File file = isFile( element );
+
+		if ( file != null ) {
+			if ( file.isFile() && isTestFile( file ) ) {
+				configuration.setWorkingDirectory( file );
+				configuration.setName( getRobotName( file ) );  // TODO Add whole suite path to name
+				// TODO Set up rest of configuration
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Configures a {@link RunConfiguration} for an individual Robot test suite if possible
+	 *
+	 * @param configuration
+	 * @param element
+	 * @return
+	 */
+	private boolean configureRobotSuite( RunConfiguration configuration, PsiElement element ) {
+		File dir;
+
+		if ( ( dir = isDirectory( element ) ) != null ) {
+			if ( isTestSuite( dir ) ) {
+				configuration.setWorkingDirectory( dir );
+				configuration.setName( getRobotName( dir ) );  // TODO Add whole suite path to name
+				// TODO Set up rest of configuration
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -171,12 +233,28 @@ public class RunConfigurationProducer
 		}
 		if ( file.isDirectory() ) {
 			for ( File child : Objects.requireNonNull( file.listFiles() ) ) {
-				System.out.println( child.getAbsolutePath() );
-				if ( isTestFile( child ) ) {
+				if ( child.getName().equals( "__init__.robot" ) ) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	private String getRobotName( File file ) {
+		if ( isTestFile( file ) || isTestSuite( file ) ) {
+			StringBuilder returnString = new StringBuilder();
+			returnString.append( getRobotName( file.getParentFile() ) );
+			if ( returnString.toString().length() > 0 ) {
+				returnString.append( "." );
+			}
+			if ( isTestFile( file ) ) {
+				returnString.append( file.getName().split( "\\." )[0] );
+			} else {
+				returnString.append( file.getName() );
+			}
+			return returnString.toString();
+		}
+		return "";
 	}
 }
