@@ -32,7 +32,9 @@ dependencies {
 }
 
 intellij {
-    version '2018.2.3'
+    version 'IC-2017.2.7'
+    downloadSources true
+    updateSinceUntilBuild = false
     plugins 'coverage'
     pluginName 'Robot Commander'
 }
