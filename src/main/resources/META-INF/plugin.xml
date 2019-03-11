@@ -54,7 +54,7 @@
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Robot Commander" icon="/META-INF/pluginIcon_16x16.svg" anchor="bottom"
+        <toolWindow id="Robot Commander" icon="/META-INF/robot_framework_11x16.png" anchor="bottom"
                     factoryClass="markz.robot_commander.plugin.toolbar.ToolWindowFactory"/>
     </extensions>
 
