@@ -19,6 +19,13 @@ package markz.robot_commander.plugin.configuration;
 import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import markz.robot_commander.sifter.RobotTestSifter;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author Mark Zeagler
@@ -47,16 +54,37 @@ public class RunConfigurationProducer
 	 */
 	@Override protected boolean setupConfigurationFromContext( RunConfiguration configuration,
 			ConfigurationContext context, Ref<PsiElement> sourceElement ) {
+		PsiElement element = sourceElement.get();
+		// TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
 		try {
-			if ( context.getLocation().getVirtualFile().getName().endsWith( ".robot" ) ) {
-				configuration.setName( context.getLocation().getVirtualFile().getName() );
-				// TODO Set up rest of configuration
-				return true;
-			} // TODO Check for individual test name, too
+			// If it's a robot file
+			File file;
+			if ( ( file = isFile( element ) ) != null ) {
+				if ( file.isFile() && isTestFile( file ) ) {
+					String name = file.getName();
+					configuration.setWorkingDirectory( file );
+					configuration.setName( name );
+					// TODO Set up rest of configuration
+					return true;
+				}
+			}
+			// If it's a robot suite
+			File dir;
+			if ( ( dir = isDirectory( element ) ) != null ) {
+				if ( isTestSuite( dir ) ) {
+					configuration.setWorkingDirectory( dir );
+					configuration.setName( dir.getName() );
+					// TODO Set up rest of configuration
+					return true;
+				}
+			}
+			// TODO Check for individual test name, too
+			System.out.println( "Check for individual tests" );
 		} catch ( Exception e ) {
+			e.printStackTrace();
 			return false;
 		}
-		return false;  // TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
+		return false;
 	}
 
 	/**
@@ -69,5 +97,86 @@ public class RunConfigurationProducer
 	@Override public boolean isConfigurationFromContext( RunConfiguration configuration,
 			ConfigurationContext context ) {
 		return false;  // TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
+	}
+
+	/**
+	 * Checks if the given {@link PsiElement} corresponds to a {@link File}.
+	 *
+	 * @param element
+	 * @return
+	 */
+	private File isFile( PsiElement element ) {
+		try {
+			PsiFile psiFile = element.getContainingFile();
+			if ( psiFile != null ) {
+				return new File( psiFile.getVirtualFile().getCanonicalPath() );
+			}
+		} catch ( NullPointerException e ) {
+
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if the given {@link PsiElement} corresponds to a directory {@link File}.
+	 *
+	 * @param element
+	 * @return
+	 */
+	private File isDirectory( PsiElement element ) {
+		try {
+			for ( PsiElement child : element.getChildren() ) {
+				if ( child.getContainingFile().getName().equals( "__init__.robot" ) ) {
+					File childFile = new File( child.getContainingFile().getVirtualFile().getCanonicalPath() );
+					return childFile.getParentFile();
+				}
+			}
+		} catch ( NullPointerException e ) {
+
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if the given {@link File} is a Robot Framework test file.
+	 *
+	 * @param file
+	 * @return
+	 */
+	private boolean isTestFile( File file ) {
+		if ( file == null ) {
+			return false;
+		}
+		String name = file.getName();
+		try {
+			if ( !name.equals( "__init__.robot" ) && name.endsWith( ".robot" )
+					&& RobotTestSifter.getFileTests( file ).size() > 0 ) {
+				return true;
+			}
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the given {@link File} is a Robot Framework test suite.
+	 *
+	 * @param file
+	 * @return
+	 */
+	private boolean isTestSuite( @Nullable File file ) {
+		if ( file == null ) {
+			return false;
+		}
+		if ( file.isDirectory() ) {
+			for ( File child : Objects.requireNonNull( file.listFiles() ) ) {
+				System.out.println( child.getAbsolutePath() );
+				if ( isTestFile( child ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
