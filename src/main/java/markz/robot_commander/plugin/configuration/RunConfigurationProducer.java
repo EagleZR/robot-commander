@@ -106,8 +106,10 @@ public class RunConfigurationProducer
 			for ( String testName : RobotTestSifter.getFileTests( parentFile ) ) {
 				if ( testName.trim().equals( element.getText().trim() ) ) {
 					configuration.setWorkingDirectory( parentFile );
-					configuration.setName(
-							getRobotName( parentFile ) + "." + testName );  // TODO Add whole suite path to name
+					configuration.setName( getRobotName( parentFile ) + "." + testName );
+					configuration.getIncludedTags().clear();
+					configuration.getExcludedTags().clear();
+					// TODO Add whole suite path to name
 					// TODO Set up rest of configuration
 					return true;
 				}
@@ -130,7 +132,10 @@ public class RunConfigurationProducer
 		if ( file != null ) {
 			if ( file.isFile() && isTestFile( file ) ) {
 				configuration.setWorkingDirectory( file );
-				configuration.setName( getRobotName( file ) );  // TODO Add whole suite path to name
+				configuration.setName( getRobotName( file ) );
+				configuration.getIncludedTags().clear();
+				configuration.getExcludedTags().clear();
+				// TODO Add whole suite path to name
 				// TODO Set up rest of configuration
 				return true;
 			}
@@ -152,7 +157,10 @@ public class RunConfigurationProducer
 		if ( ( dir = isDirectory( element ) ) != null ) {
 			if ( isTestSuite( dir ) ) {
 				configuration.setWorkingDirectory( dir );
-				configuration.setName( getRobotName( dir ) );  // TODO Add whole suite path to name
+				configuration.setName( getRobotName( dir ) );
+				configuration.getIncludedTags().clear();
+				configuration.getExcludedTags().clear();
+				// TODO Add whole suite path to name
 				// TODO Set up rest of configuration
 				return true;
 			}
