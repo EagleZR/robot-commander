@@ -39,15 +39,6 @@
         <runConfigurationProducer implementation="markz.robot_commander.plugin.configuration.RunConfigurationProducer"/>
     </extensions>
 
-    <!--<actions>-->
-        <!--&lt;!&ndash; Add your actions here &ndash;&gt;-->
-        <!--<action id="markz.robot_commander.RobotCommanderToolbarFactoryFactory" class="markz.robot_commander.RobotCommanderToolbarFactoryFactory"-->
-                <!--text="Robot Commander Toolbar"-->
-                <!--description="Toolbar for the selection and execution of Robot Framework tests">-->
-            <!--&lt;!&ndash;<add-to-group group-id="Tool"/>&ndash;&gt;-->
-        <!--</action>-->
-    <!--</actions>-->
-
     <project-components>
         <component>
             <implementation-class>markz.robot_commander.plugin.toolbar.ToolWindowFactory</implementation-class>
