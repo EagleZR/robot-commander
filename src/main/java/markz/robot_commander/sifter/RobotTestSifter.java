@@ -57,7 +57,6 @@ public final class RobotTestSifter {
 			throw new FileNotFoundException( "The given file does not exist" );
 		}
 		// Read file
-		System.out.println( "Reading file: " + file.getAbsolutePath() );
 		String fileText = new String( Files.readAllBytes( file.toPath() ), StandardCharsets.UTF_8 );
 		// Get test section
 		String testSectionText = getTestSection( fileText );
