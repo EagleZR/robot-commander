@@ -60,7 +60,7 @@ public class RunConfiguration extends LocatableConfigurationBase
 	 * @return the settings editor component.
 	 */
 	@NotNull @Override public com.intellij.openapi.options.SettingsEditor<RunConfiguration> getConfigurationEditor() {
-		return new SettingsEditor( this.getProject() );
+		return new RunConfigurationSettingsEditor( this.getProject() );
 	}
 
 	/**

@@ -27,10 +27,8 @@ import java.util.List;
  */
 public class CommandFactory implements CommandFactoryInterface {
 
-	public static final CommonCommandNames DEFAULT_COMMAND_NAME = CommonCommandNames.ROBOT;
-
 	private File workingDirectory;
-	private String commandName = DEFAULT_COMMAND_NAME.toString();
+	private String commandName;
 	private List<String> includedTags = new LinkedList<>();
 	private List<String> excludedTags = new LinkedList<>();
 	private List<String> tests = new LinkedList<>();
@@ -40,11 +38,13 @@ public class CommandFactory implements CommandFactoryInterface {
 		workingDirectory = new File( "" ).getAbsoluteFile();
 	}
 
-	@Override public String getCommandName() {
+	@Override
+	public String getCommandName() {
 		return commandName;
 	}
 
-	@Override public void setCommandName( String commandName ) {
+	@Override
+	public void setCommandName( String commandName ) {
 		this.commandName = commandName;
 	}
 
@@ -106,40 +106,4 @@ public class CommandFactory implements CommandFactoryInterface {
 	public List<String> getSuites() {
 		return Collections.synchronizedList( this.suites );
 	}
-
-	/**
-	 * Commonly used Robot Framework commands
-	 */
-	public enum CommonCommandNames {
-
-		/**
-		 * Python-specific command. Soon to be deprecated by Robot Framework.
-		 */
-		PYBOT( "pybot" ),
-
-		/**
-		 * Java-specific command. Soon to be deprecated by Robot Framework.
-		 */
-		JYBOT( "jybot" ),
-
-		/**
-		 * Iron Python-specific command. Soon to be deprecated by Robot Framework.
-		 */
-		IPYBOT( "ipybot" ),
-
-		/**
-		 * Generic command. This is the approved way to run the tests.
-		 */
-		ROBOT( "robot" );
-
-		private String name;
-
-		CommonCommandNames( String name ) {
-			this.name = name;
-		}
-
-		@Override public String toString() {
-			return this.name;
-		}}
-
 }

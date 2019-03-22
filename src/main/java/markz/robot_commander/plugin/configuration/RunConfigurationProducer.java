@@ -20,8 +20,8 @@ import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import markz.robot_commander.plugin.state.RobotCommanderSettings;
 import markz.robot_commander.sifter.RobotTestSifter;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class RunConfigurationProducer
-		extends com.intellij.execution.actions.RunConfigurationProducer<RunConfiguration> {
+	extends com.intellij.execution.actions.RunConfigurationProducer<RunConfiguration> {
 
 	protected RunConfigurationProducer( ConfigurationFactory configurationFactory ) {
 		super( configurationFactory );
@@ -52,8 +52,9 @@ public class RunConfigurationProducer
 	 * @return true if the context is applicable to this run configuration producer, false if the context is not
 	 * applicable and the configuration should be discarded.
 	 */
-	@Override protected boolean setupConfigurationFromContext( RunConfiguration configuration,
-			ConfigurationContext context, Ref<PsiElement> sourceElement ) {
+	@Override
+	protected boolean setupConfigurationFromContext( RunConfiguration configuration, ConfigurationContext context,
+		Ref<PsiElement> sourceElement ) {
 		PsiElement element = sourceElement.get();
 		// TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
 		try {
@@ -86,8 +87,8 @@ public class RunConfigurationProducer
 	 * @param context       contains the information about a location in the source code.
 	 * @return true if this configuration was created from the specified context, false otherwise.
 	 */
-	@Override public boolean isConfigurationFromContext( RunConfiguration configuration,
-			ConfigurationContext context ) {
+	@Override
+	public boolean isConfigurationFromContext( RunConfiguration configuration, ConfigurationContext context ) {
 		return false;  // TODO https://www.jetbrains.org/intellij/sdk/docs/basics/run_configurations/run_configuration_management.html#creating-configurations-from-context
 	}
 
@@ -105,6 +106,7 @@ public class RunConfigurationProducer
 		if ( parentFile != null ) {
 			for ( String testName : RobotTestSifter.getFileTests( parentFile ) ) {
 				if ( testName.trim().equals( element.getText().trim() ) ) {
+					configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
 					configuration.setWorkingDirectory( parentFile );
 					configuration.setName( getRobotName( parentFile ) + "." + testName );
 					configuration.getIncludedTags().clear();
@@ -131,6 +133,7 @@ public class RunConfigurationProducer
 
 		if ( file != null ) {
 			if ( file.isFile() && isTestFile( file ) ) {
+				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
 				configuration.setWorkingDirectory( file );
 				configuration.setName( getRobotName( file ) );
 				configuration.getIncludedTags().clear();
@@ -156,6 +159,7 @@ public class RunConfigurationProducer
 
 		if ( ( dir = isDirectory( element ) ) != null ) {
 			if ( isTestSuite( dir ) ) {
+				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
 				configuration.setWorkingDirectory( dir );
 				configuration.setName( getRobotName( dir ) );
 				configuration.getIncludedTags().clear();
@@ -220,7 +224,7 @@ public class RunConfigurationProducer
 		String name = file.getName();
 		try {
 			if ( !name.equals( "__init__.robot" ) && name.endsWith( ".robot" )
-					&& RobotTestSifter.getFileTests( file ).size() > 0 ) {
+				&& RobotTestSifter.getFileTests( file ).size() > 0 ) {
 				return true;
 			}
 		} catch ( IOException e ) {
@@ -235,7 +239,7 @@ public class RunConfigurationProducer
 	 * @param file
 	 * @return
 	 */
-	private boolean isTestSuite( @Nullable File file ) {
+	private boolean isTestSuite( File file ) {
 		if ( file == null ) {
 			return false;
 		}

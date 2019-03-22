@@ -47,6 +47,7 @@ public class BaseConfigurationPanel extends JPanel implements ConfigurationAppli
 	}
 
 	public void applyConfiguration( CommandFactoryInterface factory ) {
+		factory.setCommandName( this.optionPanel.getCommand() );
 		addCSV2List( this.optionPanel.getExcludedTags(), factory.getExcludedTags() );
 		addCSV2List( this.optionPanel.getIncludedTags(), factory.getIncludedTags() );
 		// TODO Add others to configuration

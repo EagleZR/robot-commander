@@ -18,6 +18,7 @@ package markz.robot_commander.plugin.configuration;
 
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -31,27 +32,35 @@ import java.util.Objects;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class SettingsEditor extends com.intellij.openapi.options.SettingsEditor<RunConfiguration> {
+public class RunConfigurationSettingsEditor extends SettingsEditor<RunConfiguration> {
 
 	private static final Object LOCK = new Object();
 	private Project project;
 	private NamedConfigurationPanel settingsPanel;
 
-	public SettingsEditor( Project project ) {
+	public RunConfigurationSettingsEditor( Project project ) {
 		this.project = project;
 	}
 
-	@Override protected void resetEditorFrom( @NotNull RunConfiguration s ) {
+	@Override
+	protected void resetEditorFrom(
+		@NotNull
+			RunConfiguration s ) {
 		// TODO Apply the configuration to the Panel components
 	}
 
-	@Override protected void applyEditorTo( @NotNull RunConfiguration s ) throws ConfigurationException {
+	@Override
+	protected void applyEditorTo(
+		@NotNull
+			RunConfiguration s ) throws ConfigurationException {
 		this.settingsPanel.applyConfiguration( s );
 	}
 
-	@NotNull @Override protected JComponent createEditor() {
+	@NotNull
+	@Override
+	protected JComponent createEditor() {
 		VirtualFile virtualFile = ModuleRootManager.getInstance( ModuleManager.getInstance( project ).getModules()[0] )
-				.getContentRoots()[0];
+			.getContentRoots()[0];
 		File file = new File( Objects.requireNonNull( virtualFile.getCanonicalPath() ) );
 
 		if ( this.settingsPanel == null ) {

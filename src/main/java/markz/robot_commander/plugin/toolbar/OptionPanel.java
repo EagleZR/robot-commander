@@ -17,6 +17,8 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
+import markz.robot_commander.plugin.state.RobotCommanderSettings;
+import markz.robot_commander.plugin.state.RobotCommanderSettingsSubscriber;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +33,10 @@ public class OptionPanel extends JPanel {
 	private TextField argumentsTextField;
 	private TextField includeTagsTextField;
 	private TextField excludeTagsTextField;
+	private JComboBox<String> commandComboBox;
 
 	public OptionPanel() {
-		super( new GridLayout( 2, 1 ) );
+		super( new GridLayout( 3, 1 ) );
 
 		if ( debugColors ) {
 			this.setBackground( JBColor.CYAN );
@@ -42,8 +45,14 @@ public class OptionPanel extends JPanel {
 		// Configuration
 
 		// Initialize components
+		createAndAddCommandPanel();
 		createAndAddTagsPanel();
 		createAndAddArgumentsPanel();
+	}
+
+	private void createAndAddCommandPanel() {
+		CommandPanel commandPanel = new CommandPanel();
+		this.add( commandPanel );
 	}
 
 	private void createAndAddTagsPanel() {
@@ -66,6 +75,56 @@ public class OptionPanel extends JPanel {
 
 	public String getIncludedTags() {
 		return this.includeTagsTextField.getText();
+	}
+
+	public String getCommand() {
+		return this.commandComboBox == null ? "" : (String) this.commandComboBox.getSelectedItem();
+	}
+
+	private class CommandPanel extends JPanel implements RobotCommanderSettingsSubscriber {
+
+		private CommandPanel() {
+			if ( debugColors ) {
+				this.setBackground( JBColor.CYAN );
+			}
+
+			RobotCommanderSettings.getInstance().subscribe( this );
+
+			// Configuration
+			GridLayout layout = new GridLayout( 2, 1 );
+			this.setLayout( layout );
+
+			// Initialize Components
+			createAndAddCommandLabel();
+			createAndAddCommandComboBox();
+		}
+
+		private void createAndAddCommandLabel() {
+			Label commandLabel = new Label( "Select Command:" );
+			this.add( commandLabel );
+		}
+
+		private void createAndAddCommandComboBox() {
+			commandComboBox = new JComboBox<>();
+			updateCommands();
+			this.add( commandComboBox );
+		}
+
+		private void updateCommands() {
+			Object selected = commandComboBox.getSelectedItem();
+			commandComboBox.removeAllItems();
+			for ( String command : RobotCommanderSettings.getInstance().getAvailableCommands() ) {
+				commandComboBox.addItem( command );
+			}
+			if ( selected != null && !selected.equals( "" ) ) {
+				commandComboBox.setSelectedItem( selected );
+			}
+		}
+
+		@Override
+		public void notifySettingsChanged() {
+			updateCommands();
+		}
 	}
 
 	private class ArgumentsPanel extends JPanel {
