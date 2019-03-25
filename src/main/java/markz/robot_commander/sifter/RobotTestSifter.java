@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public final class RobotTestSifter {
 
 	private static final String TEST_SECTION_PATTERN_TEXT = "(\\*{3} Test Cases \\*{3}(?:[\\s\\S^](?!\\*\\*\\*))*)";
-	private static final String TEST_NAME_PATTERN_TEXT = "\\n([a-zA-Z].*)";
+	private static final String TEST_NAME_PATTERN_TEXT = "\\n([0-9a-zA-Z].*)";
 	private static final Pattern TEST_SECTION_PATTERN = Pattern.compile( TEST_SECTION_PATTERN_TEXT );
 	private static final Pattern TEST_NAME_PATTERN = Pattern.compile( TEST_NAME_PATTERN_TEXT );
 
