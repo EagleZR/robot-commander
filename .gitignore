@@ -112,3 +112,6 @@ fabric.properties
 **/.idea/*
 *.iml
 *.ipr
+
+intellibot/*
+backup/*
