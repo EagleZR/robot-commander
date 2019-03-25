@@ -21,6 +21,7 @@
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.millennialmedia.intellibot</depends>
+    <depends>com.intellij.modules.python</depends>
 
     <description><![CDATA[
     Tool for executing Robot Framework tests<br>
