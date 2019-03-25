@@ -48,7 +48,7 @@ public class RunConfiguration extends LocatableConfigurationBase
 
 		this.factory = new CommandFactory();
 
-		this.factory.setWorkingDirectory( new File( project.getBaseDir().getCanonicalPath() ) );
+		this.factory.setWorkingDirectory( new File( project.getBasePath() ) );
 	}
 
 	/**

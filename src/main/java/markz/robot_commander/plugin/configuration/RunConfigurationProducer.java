@@ -17,11 +17,14 @@
 package markz.robot_commander.plugin.configuration;
 
 import com.intellij.execution.actions.ConfigurationContext;
+import com.intellij.execution.actions.LazyRunConfigurationProducer;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import markz.robot_commander.plugin.state.RobotCommanderSettings;
 import markz.robot_commander.sifter.RobotTestSifter;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,16 +34,9 @@ import java.util.Objects;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class RunConfigurationProducer
-	extends com.intellij.execution.actions.RunConfigurationProducer<RunConfiguration> {
+public class RunConfigurationProducer extends LazyRunConfigurationProducer<RunConfiguration> {
 
-	protected RunConfigurationProducer( ConfigurationFactory configurationFactory ) {
-		super( configurationFactory );
-	}
-
-	protected RunConfigurationProducer( ConfigurationType configurationType ) {
-		super( configurationType );
-	}
+	private static final Logger logger = Logger.getInstance( RunConfigurationProducer.class );
 
 	/**
 	 * Sets up a configuration based on the specified context.
@@ -116,35 +112,29 @@ public class RunConfigurationProducer
 					return true;
 				}
 			}
+		} else {
+
 		}
 
 		return false;
 	}
 
 	/**
-	 * Configures a {@link RunConfiguration} for an individual Robot test file if possible
+	 * Checks if the given {@link PsiElement} corresponds to a {@link File}.
 	 *
-	 * @param configuration
 	 * @param element
 	 * @return
 	 */
-	private boolean configureRobotFile( RunConfiguration configuration, PsiElement element ) {
-		File file = isFile( element );
-
-		if ( file != null ) {
-			if ( file.isFile() && isTestFile( file ) ) {
-				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
-				configuration.setWorkingDirectory( file );
-				configuration.setName( getRobotName( file ) );
-				configuration.getIncludedTags().clear();
-				configuration.getExcludedTags().clear();
-				// TODO Add whole suite path to name
-				// TODO Set up rest of configuration
-				return true;
+	private File isFile( PsiElement element ) {
+		try {
+			PsiFile psiFile = element.getContainingFile();
+			if ( psiFile != null ) {
+				return new File( psiFile.getVirtualFile().getCanonicalPath() );
 			}
+		} catch ( NullPointerException e ) {
+			logger.trace( e.getMessage() );
 		}
-
-		return false;
+		return null;
 	}
 
 	/**
@@ -174,41 +164,30 @@ public class RunConfigurationProducer
 	}
 
 	/**
-	 * Checks if the given {@link PsiElement} corresponds to a {@link File}.
+	 * Configures a {@link RunConfiguration} for an individual Robot test file if possible
 	 *
+	 * @param configuration
 	 * @param element
 	 * @return
 	 */
-	private File isFile( PsiElement element ) {
-		try {
-			PsiFile psiFile = element.getContainingFile();
-			if ( psiFile != null ) {
-				return new File( psiFile.getVirtualFile().getCanonicalPath() );
+	private boolean configureRobotFile( RunConfiguration configuration, PsiElement element ) {
+		File file = isFile( element );
+
+		if ( file != null ) {
+			if ( file.isFile() && isTestFile( file ) ) {
+				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
+				configuration.setWorkingDirectory( file );
+				configuration.setName( getRobotName( file ) );
+				configuration.getIncludedTags().clear();
+				configuration.getExcludedTags().clear();
+				// TODO Add whole suite path to name
+				// TODO Set up rest of configuration
+				return true;
 			}
-		} catch ( NullPointerException e ) {
-
+		} else {
 		}
-		return null;
-	}
 
-	/**
-	 * Checks if the given {@link PsiElement} corresponds to a directory {@link File}.
-	 *
-	 * @param element
-	 * @return
-	 */
-	private File isDirectory( PsiElement element ) {
-		try {
-			for ( PsiElement child : element.getChildren() ) {
-				if ( child.getContainingFile().getName().equals( "__init__.robot" ) ) {
-					File childFile = new File( child.getContainingFile().getVirtualFile().getCanonicalPath() );
-					return childFile.getParentFile();
-				}
-			}
-		} catch ( NullPointerException e ) {
-
-		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -228,9 +207,29 @@ public class RunConfigurationProducer
 				return true;
 			}
 		} catch ( IOException e ) {
-			e.printStackTrace();
+			logger.trace( e.getMessage() );
 		}
 		return false;
+	}
+
+	/**
+	 * Checks if the given {@link PsiElement} corresponds to a directory {@link File}.
+	 *
+	 * @param element
+	 * @return
+	 */
+	private File isDirectory( PsiElement element ) {
+		try {
+			for ( PsiElement child : element.getChildren() ) {
+				if ( child.getContainingFile().getName().equals( "__init__.robot" ) ) {
+					File childFile = new File( child.getContainingFile().getVirtualFile().getCanonicalPath() );
+					return childFile.getParentFile();
+				}
+			}
+		} catch ( NullPointerException e ) {
+			logger.trace( e.getMessage() );
+		}
+		return null;
 	}
 
 	/**
@@ -268,5 +267,11 @@ public class RunConfigurationProducer
 			return returnString.toString();
 		}
 		return "";
+	}
+
+	@NotNull
+	@Override
+	public com.intellij.execution.configurations.ConfigurationFactory getConfigurationFactory() {
+		return ConfigurationFactory.getInstance();
 	}
 }

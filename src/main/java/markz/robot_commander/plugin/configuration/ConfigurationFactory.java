@@ -26,8 +26,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ConfigurationFactory extends com.intellij.execution.configurations.ConfigurationFactory {
 
-	protected ConfigurationFactory( @NotNull ConfigurationType type ) {
+	private static ConfigurationFactory instance;
+
+	protected ConfigurationFactory(
+		@NotNull
+			ConfigurationType type ) {
 		super( type );
+		instance = this;
+	}
+
+	public static ConfigurationFactory getInstance() {
+		return instance;
 	}
 
 	/**
@@ -36,7 +45,11 @@ public class ConfigurationFactory extends com.intellij.execution.configurations.
 	 * @param project the project in which the run configuration will be used
 	 * @return the run configuration instance.
 	 */
-	@NotNull @Override public com.intellij.execution.configurations.RunConfiguration createTemplateConfiguration( @NotNull Project project ) {
+	@NotNull
+	@Override
+	public com.intellij.execution.configurations.RunConfiguration createTemplateConfiguration(
+		@NotNull
+			Project project ) {
 		return new RunConfiguration( project, this, "Robot Framework" );
 	}
 }

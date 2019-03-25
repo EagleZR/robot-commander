@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.1'
+    id 'org.jetbrains.intellij' version '0.4.7'
 }
 
 apply plugin: 'idea'
@@ -24,18 +24,18 @@ repositories {
 
 dependencies {
     testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.1.0'
+        'org.junit.jupiter:junit-jupiter-api:5.1.0'
     )
     testRuntimeOnly(
-            'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+        'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
 }
 
 intellij {
-    version 'IC-2017.2.7'
-    downloadSources true
+    version = 'LATEST-EAP-SNAPSHOT'
+    downloadSources = false
     updateSinceUntilBuild = false
-    plugins 'coverage'
+    plugins = [/*"PythonCore:LATEST-EAP-SNAPSHOT",*/ "coverage"/*, "com.millennialmedia.intellibot:0.10.143.381"*/]
     pluginName 'Robot Commander'
 }
 
