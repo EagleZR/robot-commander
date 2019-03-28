@@ -77,10 +77,7 @@ public class RunProfileState extends PythonCommandLineState {
 
 		File outputDir = this.runConfiguration.getRunOutputDirectory();
 
-		newPatcherArray[i++] = gcl -> {
-			gcl.addParameter( "-d" );
-			gcl.addParameter( outputDir.getAbsolutePath() );
-		};
+		newPatcherArray[i++] = gcl -> gcl.addParameters( "-d", outputDir.getAbsolutePath() );
 
 		// Config Patchers
 		for ( CommandLinePatcher patcher : configPatchers ) {

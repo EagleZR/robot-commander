@@ -161,20 +161,14 @@ public class RunConfiguration extends AbstractPythonRunConfiguration
 				if ( i >= patchers.length ) {
 					LOGGER.error( "There was an indexing error while adding excluded tags to the patchers." );
 				}
-				patchers[i++] = gcl -> {
-					gcl.addParameter( "-e" );
-					gcl.addParameter( tag );
-				};
+				patchers[i++] = gcl -> gcl.addParameters( "-e", tag );
 			}
 			// Add included tags patchers
 			for ( String tag : getIncludedTags() ) {
 				if ( i >= patchers.length ) {
 					LOGGER.error( "There was an indexing error while adding included tags to the patchers." );
 				}
-				patchers[i++] = gcl -> {
-					gcl.addParameter( "-i" );
-					gcl.addParameter( tag );
-				};
+				patchers[i++] = gcl -> gcl.addParameters( "-i", tag );
 			}
 			patchers[i++] = gcl -> gcl.addParameter( getWorkingDirectory() );
 			return patchers;
