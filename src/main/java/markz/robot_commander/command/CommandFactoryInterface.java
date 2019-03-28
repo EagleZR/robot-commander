@@ -16,7 +16,6 @@
 
 package markz.robot_commander.command;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -55,14 +54,14 @@ public interface CommandFactoryInterface {
 	 *
 	 * @return The working directory which contains the Robot tests.
 	 */
-	File getWorkingDirectory();
+	String getWorkingDirectory();
 
 	/**
 	 * Sets the new working directory where the Robot tests are located.
 	 *
 	 * @param workingDirectory The new directory of Robot tests.
 	 */
-	void setWorkingDirectory( File workingDirectory );
+	void setWorkingDirectory( String workingDirectory );
 
 	/**
 	 * Retrieves the list of included tags. This list is editable and is thread safe to allow editing.

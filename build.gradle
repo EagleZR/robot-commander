@@ -1,11 +1,13 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.7'
+    id "com.jetbrains.python.envs" version "0.0.30"
 }
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
+apply plugin: 'com.jetbrains.python.envs'
 
 group 'markz'
 version '1.0-SNAPSHOT'
@@ -35,7 +37,7 @@ intellij {
     version = 'LATEST-EAP-SNAPSHOT'
     downloadSources = false
     updateSinceUntilBuild = false
-    plugins = [/*"PythonCore:LATEST-EAP-SNAPSHOT",*/ "coverage"/*, "com.millennialmedia.intellibot:0.10.143.381"*/]
+    plugins = ["PythonCore:2019.1.191.6183.53", "coverage", /*"com.millennialmedia.intellibot:0.10.143.381"*/]
     pluginName 'Robot Commander'
 }
 

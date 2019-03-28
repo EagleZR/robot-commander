@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class CommandFactory implements CommandFactoryInterface {
 
-	private File workingDirectory;
+	private String workingDirectory;
 	private String commandName;
 	private List<String> includedTags = new LinkedList<>();
 	private List<String> excludedTags = new LinkedList<>();
@@ -35,7 +35,7 @@ public class CommandFactory implements CommandFactoryInterface {
 	private List<String> suites = new LinkedList<>();
 
 	public CommandFactory() {
-		workingDirectory = new File( "" ).getAbsoluteFile();
+		workingDirectory = new File( "" ).getAbsolutePath();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CommandFactory implements CommandFactoryInterface {
 		addExcludedTags( command );
 		addTests( command );
 		addSuites( command );
-		command.append( " " ).append( workingDirectory.getAbsolutePath() );
+		command.append( " " ).append( workingDirectory );
 		return command.toString();
 	}
 
@@ -83,11 +83,11 @@ public class CommandFactory implements CommandFactoryInterface {
 		}
 	}
 
-	public File getWorkingDirectory() {
+	public String getWorkingDirectory() {
 		return workingDirectory;
 	}
 
-	public void setWorkingDirectory( File workingDirectory ) {
+	public void setWorkingDirectory( String workingDirectory ) {
 		this.workingDirectory = workingDirectory;
 	}
 

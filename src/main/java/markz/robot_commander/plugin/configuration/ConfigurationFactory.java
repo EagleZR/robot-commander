@@ -50,6 +50,6 @@ public class ConfigurationFactory extends com.intellij.execution.configurations.
 	public com.intellij.execution.configurations.RunConfiguration createTemplateConfiguration(
 		@NotNull
 			Project project ) {
-		return new RunConfiguration( project, this, "Robot Framework" );
+		return new RunConfiguration( project, this );
 	}
 }

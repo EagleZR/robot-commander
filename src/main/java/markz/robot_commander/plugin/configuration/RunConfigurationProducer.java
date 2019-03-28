@@ -103,7 +103,7 @@ public class RunConfigurationProducer extends LazyRunConfigurationProducer<RunCo
 			for ( String testName : RobotTestSifter.getFileTests( parentFile ) ) {
 				if ( testName.trim().equals( element.getText().trim() ) ) {
 					configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
-					configuration.setWorkingDirectory( parentFile );
+					configuration.setWorkingDirectory( parentFile.getAbsolutePath() );
 					configuration.setName( getRobotName( parentFile ) + "." + testName );
 					configuration.getIncludedTags().clear();
 					configuration.getExcludedTags().clear();
@@ -150,7 +150,7 @@ public class RunConfigurationProducer extends LazyRunConfigurationProducer<RunCo
 		if ( ( dir = isDirectory( element ) ) != null ) {
 			if ( isTestSuite( dir ) ) {
 				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
-				configuration.setWorkingDirectory( dir );
+				configuration.setWorkingDirectory( dir.getAbsolutePath() );
 				configuration.setName( getRobotName( dir ) );
 				configuration.getIncludedTags().clear();
 				configuration.getExcludedTags().clear();
@@ -176,7 +176,7 @@ public class RunConfigurationProducer extends LazyRunConfigurationProducer<RunCo
 		if ( file != null ) {
 			if ( file.isFile() && isTestFile( file ) ) {
 				configuration.setCommandName( RobotCommanderSettings.getInstance().getDefaultCommand() );
-				configuration.setWorkingDirectory( file );
+				configuration.setWorkingDirectory( file.getAbsolutePath() );
 				configuration.setName( getRobotName( file ) );
 				configuration.getIncludedTags().clear();
 				configuration.getExcludedTags().clear();
