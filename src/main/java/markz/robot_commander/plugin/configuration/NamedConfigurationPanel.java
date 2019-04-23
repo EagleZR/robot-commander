@@ -16,6 +16,7 @@
 
 package markz.robot_commander.plugin.configuration;
 
+import com.intellij.ui.components.JBTextField;
 import markz.robot_commander.command.CommandFactoryInterface;
 import markz.robot_commander.command.ConfigurationApplicator;
 import markz.robot_commander.plugin.toolbar.BaseConfigurationPanel;
@@ -51,7 +52,7 @@ public class NamedConfigurationPanel extends JPanel implements ConfigurationAppl
 
 	private class NamePanel extends JPanel {
 
-		private TextField textField;
+		private JBTextField textField;
 
 		private NamePanel() {
 			super( new GridLayout( 2, 1 ) );
@@ -61,7 +62,7 @@ public class NamedConfigurationPanel extends JPanel implements ConfigurationAppl
 			this.add( label );
 
 			// Text Field
-			this.textField = new TextField();
+			this.textField = new JBTextField();
 			this.add( this.textField );
 		}
 	}

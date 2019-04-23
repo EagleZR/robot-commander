@@ -17,6 +17,7 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBTextField;
 import markz.robot_commander.plugin.state.RobotCommanderSettings;
 import markz.robot_commander.plugin.state.RobotCommanderSettingsSubscriber;
 
@@ -30,9 +31,9 @@ import java.awt.*;
 public class OptionPanel extends JPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
-	private TextField argumentsTextField;
-	private TextField includeTagsTextField;
-	private TextField excludeTagsTextField;
+	private JBTextField argumentsTextField;
+	private JBTextField includeTagsTextField;
+	private JBTextField excludeTagsTextField;
 	private JComboBox<String> commandComboBox;
 
 	public OptionPanel() {
@@ -153,11 +154,11 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddArgumentsTextField() {
-			argumentsTextField = new TextField();
+			argumentsTextField = new JBTextField();
 			argumentsTextField.setMaximumSize( new Dimension( 1000000, 40 ) );
-			argumentsTextField.addTextListener( e -> {
-				// TODO Audit input data for validity
-			} );
+			//			argumentsTextField.addTextListener( e -> {
+			//				// TODO Audit input data for validity
+			//			} );
 			this.add( argumentsTextField );
 		}
 	}
@@ -190,7 +191,7 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddIncludeTagsTextField() {
-			includeTagsTextField = new TextField();
+			includeTagsTextField = new JBTextField();
 			includeTagsTextField.setMaximumSize( new Dimension( 1000000, 40 ) );
 			this.add( includeTagsTextField );
 		}
@@ -203,7 +204,7 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddExcludeTagsTextField() {
-			excludeTagsTextField = new TextField();
+			excludeTagsTextField = new JBTextField();
 			excludeTagsTextField.setMaximumSize( new Dimension( 1000000, 40 ) );
 			this.add( excludeTagsTextField );
 		}
