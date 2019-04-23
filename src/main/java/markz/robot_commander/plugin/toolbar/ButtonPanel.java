@@ -48,18 +48,14 @@ public class ButtonPanel extends JPanel {
 		JButton startButton = new JButton( "Start" );  // TODO Find how to reference IntelliJ's start button
 		startButton.setVerticalTextPosition( AbstractButton.CENTER );
 		startButton.setHorizontalAlignment( AbstractButton.LEADING );
-		startButton.addActionListener( e -> {
-			start();
-		} );
+		startButton.addActionListener( e -> start() );
 		this.add( startButton );
 
 		// Stop Button
 		JButton stopButton = new JButton( "Stop" );  // TODO Find how to reference IntelliJ's stop button
 		stopButton.setVerticalTextPosition( AbstractButton.CENTER );
 		stopButton.setHorizontalAlignment( AbstractButton.LEADING );
-		stopButton.addActionListener( e -> {
-			stop();
-		} );
+		stopButton.addActionListener( e -> stop() );
 		this.add( stopButton );
 
 		// Pause Button
