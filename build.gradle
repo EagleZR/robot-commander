@@ -37,7 +37,7 @@ intellij {
     version = 'LATEST-EAP-SNAPSHOT'
     downloadSources = false
     updateSinceUntilBuild = false
-    plugins = ["PythonCore:2019.1.191.6183.53", "coverage", /*"com.millennialmedia.intellibot:0.10.143.381"*/]
+    plugins = ["PythonCore:2019.1.191.6183.53", "coverage", "com.millennialmedia.intellibot:0.10.143.381"]
     pluginName 'Robot Commander'
 }
 
