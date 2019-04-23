@@ -30,8 +30,6 @@ import java.awt.*;
 public class ButtonPanel extends JPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
-	private final JButton startButton;
-	private final JButton stopButton;
 
 	private Runnable startAction = () -> System.out.println( "Start Clicked!" );
 	private Runnable stopAction = () -> System.out.println( "Stop clicked!" );
@@ -47,7 +45,7 @@ public class ButtonPanel extends JPanel {
 		this.setMaximumSize( new Dimension( 500, 50 ) );
 
 		// Start Button
-		startButton = new JButton( "Start" );  // TODO Find how to reference IntelliJ's start button
+		JButton startButton = new JButton( "Start" );  // TODO Find how to reference IntelliJ's start button
 		startButton.setVerticalTextPosition( AbstractButton.CENTER );
 		startButton.setHorizontalAlignment( AbstractButton.LEADING );
 		startButton.addActionListener( e -> {
@@ -56,7 +54,7 @@ public class ButtonPanel extends JPanel {
 		this.add( startButton );
 
 		// Stop Button
-		stopButton = new JButton( "Stop" );  // TODO Find how to reference IntelliJ's stop button
+		JButton stopButton = new JButton( "Stop" );  // TODO Find how to reference IntelliJ's stop button
 		stopButton.setVerticalTextPosition( AbstractButton.CENTER );
 		stopButton.setHorizontalAlignment( AbstractButton.LEADING );
 		stopButton.addActionListener( e -> {
