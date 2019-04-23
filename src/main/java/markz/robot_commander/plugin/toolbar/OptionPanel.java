@@ -17,6 +17,7 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import markz.robot_commander.plugin.state.RobotCommanderSettings;
 import markz.robot_commander.plugin.state.RobotCommanderSettingsSubscriber;
@@ -101,7 +102,7 @@ public class OptionPanel extends JPanel {
 		}
 
 		private void createAndAddCommandLabel() {
-			Label commandLabel = new Label( "Select Command:" );
+			JBLabel commandLabel = new JBLabel( "Select Command:" );
 			this.add( commandLabel );
 		}
 
@@ -148,7 +149,7 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddArgumentsLabel() {
-			Label argumentsLabel = new Label( "Additional Arguments:" );
+			JBLabel argumentsLabel = new JBLabel( "Additional Arguments:" );
 			this.add( argumentsLabel );
 		}
 
@@ -185,7 +186,7 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddIncludeTagsLabel() {
-			Label includeTagsLabel = new Label( "Include Tags:" );
+			JBLabel includeTagsLabel = new JBLabel( "Include Tags:" );
 			this.add( includeTagsLabel );
 		}
 
@@ -198,7 +199,7 @@ public class OptionPanel extends JPanel {
 
 		// Method to help clean up the constructor
 		private void createAndAddExcludeTagsLabel() {
-			Label excludeTagsLabel = new Label( "Exclude Tags:" );
+			JBLabel excludeTagsLabel = new JBLabel( "Exclude Tags:" );
 			this.add( excludeTagsLabel );
 		}
 

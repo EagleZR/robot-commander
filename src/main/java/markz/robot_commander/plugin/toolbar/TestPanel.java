@@ -17,7 +17,7 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
-import org.jdesktop.swingx.JXTree;
+import com.intellij.ui.treeStructure.Tree;
 import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
 import org.jdesktop.swingx.renderer.IconValues;
 import org.jdesktop.swingx.renderer.StringValues;
@@ -58,7 +58,7 @@ public class TestPanel extends JPanel {
 		model.setRoot( workingDirectory );
 	}
 
-	private class TestTree extends JXTree {
+	private class TestTree extends Tree {
 		private TestTree() {
 			super( new FileSystemModel( rootFile ) );
 			this.setCellRenderer( new DefaultTreeRenderer( IconValues.FILE_ICON, StringValues.FILE_NAME ) );
