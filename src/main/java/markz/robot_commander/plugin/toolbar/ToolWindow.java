@@ -16,7 +16,8 @@
 
 package markz.robot_commander.plugin.toolbar;
 
-import javax.swing.*;
+import com.intellij.ui.components.JBPanel;
+
 import java.awt.*;
 import java.io.File;
 
@@ -24,7 +25,7 @@ import java.io.File;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class ToolWindow extends JPanel {
+public class ToolWindow extends JBPanel {
 
 	private static final Object lock = new Object();
 	private static ToolWindow instance;

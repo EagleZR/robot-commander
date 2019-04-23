@@ -16,10 +16,10 @@
 
 package markz.robot_commander.plugin.toolbar;
 
+import com.intellij.ui.components.JBPanel;
 import markz.robot_commander.command.CommandFactoryInterface;
 import markz.robot_commander.command.ConfigurationApplicator;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import java.util.List;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class BaseConfigurationPanel extends JPanel implements ConfigurationApplicator {
+public class BaseConfigurationPanel extends JBPanel implements ConfigurationApplicator {
 
 	private OptionPanel optionPanel;
 	private TestPanel testPanel;

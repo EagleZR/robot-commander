@@ -17,12 +17,12 @@
 package markz.robot_commander.plugin.configuration;
 
 import com.intellij.ui.components.JBLabel;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextField;
 import markz.robot_commander.command.CommandFactoryInterface;
 import markz.robot_commander.command.ConfigurationApplicator;
 import markz.robot_commander.plugin.toolbar.BaseConfigurationPanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
@@ -30,7 +30,7 @@ import java.io.File;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class NamedConfigurationPanel extends JPanel implements ConfigurationApplicator {
+public class NamedConfigurationPanel extends JBPanel implements ConfigurationApplicator {
 
 	private NamePanel namePanel;
 	private BaseConfigurationPanel baseConfigurationPanel;
@@ -51,7 +51,7 @@ public class NamedConfigurationPanel extends JPanel implements ConfigurationAppl
 		this.baseConfigurationPanel.applyConfiguration( factory );
 	}
 
-	private class NamePanel extends JPanel {
+	private class NamePanel extends JBPanel {
 
 		private JBTextField textField;
 

@@ -17,21 +17,17 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.treeStructure.Tree;
-import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
-import org.jdesktop.swingx.renderer.IconValues;
-import org.jdesktop.swingx.renderer.StringValues;
 import org.jdesktop.swingx.treetable.FileSystemModel;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 
 /**
  * @author Mark Zeagler
  * @version 1.0
  */
-public class TestPanel extends JPanel {
+public class TestPanel extends JBPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
 	private File rootFile;
@@ -45,11 +41,11 @@ public class TestPanel extends JPanel {
 		this.rootFile = file;
 
 		// Configuration
-		this.setLayout( new BorderLayout() );
+		// this.setLayout( new BorderLayout() );
 
 		// Initialize components
-		TreePanel treePanel = new TreePanel();
-		this.add( treePanel, BorderLayout.CENTER );
+		testTree = new TestTree();
+		this.add( testTree );
 	}
 
 	public void updateWorkingDirectory( File workingDirectory ) {
@@ -61,17 +57,6 @@ public class TestPanel extends JPanel {
 	private class TestTree extends Tree {
 		private TestTree() {
 			super( new FileSystemModel( rootFile ) );
-			this.setCellRenderer( new DefaultTreeRenderer( IconValues.FILE_ICON, StringValues.FILE_NAME ) );
 		}
 	}
-
-	// Wrapper for the TestTree
-	private class TreePanel extends ScrollPane {
-		private TreePanel() {
-			super();
-			testTree = new TestTree();
-			this.add( testTree );
-		}
-	}
-
 }

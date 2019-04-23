@@ -17,6 +17,7 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ import java.awt.*;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class ButtonPanel extends JPanel {
+public class ButtonPanel extends JBPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
 

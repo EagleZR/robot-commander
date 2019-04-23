@@ -18,6 +18,7 @@ package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextField;
 import markz.robot_commander.plugin.state.RobotCommanderSettings;
 import markz.robot_commander.plugin.state.RobotCommanderSettingsSubscriber;
@@ -29,7 +30,7 @@ import java.awt.*;
  * @author Mark Zeagler
  * @version 1.0
  */
-public class OptionPanel extends JPanel {
+public class OptionPanel extends JBPanel {
 
 	private static boolean debugColors = false;   // TODO Set via config file
 	private JBTextField argumentsTextField;
@@ -83,7 +84,7 @@ public class OptionPanel extends JPanel {
 		return this.commandComboBox == null ? "" : (String) this.commandComboBox.getSelectedItem();
 	}
 
-	private class CommandPanel extends JPanel implements RobotCommanderSettingsSubscriber {
+	private class CommandPanel extends JBPanel implements RobotCommanderSettingsSubscriber {
 
 		private CommandPanel() {
 			if ( debugColors ) {
@@ -129,7 +130,7 @@ public class OptionPanel extends JPanel {
 		}
 	}
 
-	private class ArgumentsPanel extends JPanel {
+	private class ArgumentsPanel extends JBPanel {
 
 		private ArgumentsPanel() {
 			if ( debugColors ) {
@@ -164,7 +165,7 @@ public class OptionPanel extends JPanel {
 		}
 	}
 
-	private class TagsPanel extends JPanel {
+	private class TagsPanel extends JBPanel {
 
 		private TagsPanel() {
 			if ( debugColors ) {
