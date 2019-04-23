@@ -20,7 +20,6 @@ import com.intellij.ui.JBColor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Provides a Control Panel with 'Start' and 'Stop' buttons to control the execution of Robot Framework tests.
@@ -33,6 +32,9 @@ public class ButtonPanel extends JPanel {
 	private static boolean debugColors = false;   // TODO Set via config file
 	private final JButton startButton;
 	private final JButton stopButton;
+
+	private Runnable startAction = () -> System.out.println( "Start Clicked!" );
+	private Runnable stopAction = () -> System.out.println( "Stop clicked!" );
 
 	public ButtonPanel() {
 		super( new FlowLayout( FlowLayout.LEFT ) );
@@ -49,7 +51,7 @@ public class ButtonPanel extends JPanel {
 		startButton.setVerticalTextPosition( AbstractButton.CENTER );
 		startButton.setHorizontalAlignment( AbstractButton.LEADING );
 		startButton.addActionListener( e -> {
-			System.out.println( "Start clicked!" );
+			start();
 		} );
 		this.add( startButton );
 
@@ -58,7 +60,7 @@ public class ButtonPanel extends JPanel {
 		stopButton.setVerticalTextPosition( AbstractButton.CENTER );
 		stopButton.setHorizontalAlignment( AbstractButton.LEADING );
 		stopButton.addActionListener( e -> {
-			System.out.println( "Stop clicked!" );
+			stop();
 		} );
 		this.add( stopButton );
 
@@ -66,21 +68,29 @@ public class ButtonPanel extends JPanel {
 
 	}
 
-	/**
-	 * Sets the action to be performed when the Start Button is pressed
-	 *
-	 * @param l The listener to be set for the Start Button
-	 */
-	public void setStartActionListener( ActionListener l ) {
-		startButton.addActionListener( l );
+	private void start() {
+		this.startAction.run();
+	}
+
+	private void stop() {
+		this.stopAction.run();
 	}
 
 	/**
 	 * Sets the action to be performed when the Start Button is pressed
 	 *
-	 * @param l The listener to be set for the Start Button
+	 * @param r The {@link Runnable} that will execute when the 'Start' button is clicked.
 	 */
-	public void setStopActionListener( ActionListener l ) {
-		stopButton.addActionListener( l );
+	public void setStartAction( Runnable r ) {
+		this.startAction = r;
+	}
+
+	/**
+	 * Sets the action to be performed when the Start Button is pressed
+	 *
+	 * @param r The {@link Runnable} that will execute when the 'Stop' button is clicked.
+	 */
+	public void setStopAction( Runnable r ) {
+		this.stopAction = r;
 	}
 }
