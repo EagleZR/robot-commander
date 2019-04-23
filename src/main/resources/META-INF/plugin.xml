@@ -36,7 +36,7 @@
         <!-- Add your extensions here -->
         <configurationType implementation="markz.robot_commander.plugin.configuration.ConfigurationType"/>
         <runConfigurationProducer implementation="markz.robot_commander.plugin.configuration.RunConfigurationProducer"/>
-        <toolWindow id="Robot Commander" icon="/META-INF/robot_framework_11x16.png" anchor="bottom"
+        <toolWindow id="Robot Commander" icon="/META-INF/robot_framework_11x16.png" anchor="left"
                     factoryClass="markz.robot_commander.plugin.toolbar.ToolWindowFactory"/>
     </extensions>
 
