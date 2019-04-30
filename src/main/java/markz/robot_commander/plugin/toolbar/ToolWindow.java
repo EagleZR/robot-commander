@@ -20,6 +20,7 @@ import com.intellij.ui.components.JBPanel;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Mark Zeagler
@@ -31,14 +32,14 @@ public class ToolWindow extends JBPanel {
 	private static ToolWindow instance;
 	private BaseConfigurationPanel baseConfigurationPanel;
 
-	private ToolWindow( File file ) {
+	private ToolWindow( File file ) throws IOException {
 		super( new BorderLayout() );
 		this.add( new ButtonPanel(), BorderLayout.NORTH );
 		this.baseConfigurationPanel = new BaseConfigurationPanel( file );
 		this.add( this.baseConfigurationPanel, BorderLayout.CENTER );
 	}
 
-	public static ToolWindow getInstance( File file ) {
+	public static ToolWindow getInstance( File file ) throws IOException {
 		if ( instance == null ) {
 			synchronized ( lock ) {
 				if ( instance == null ) {
@@ -50,7 +51,7 @@ public class ToolWindow extends JBPanel {
 		return instance;
 	}
 
-	public void updateWorkingDirectory( File workingDirectory ) {
+	public void updateWorkingDirectory( File workingDirectory ) throws IOException {
 		this.baseConfigurationPanel.updateWorkingDirectory( workingDirectory );
 	}
 

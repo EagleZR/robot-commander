@@ -25,6 +25,7 @@ import markz.robot_commander.plugin.toolbar.BaseConfigurationPanel;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Mark Zeagler
@@ -35,7 +36,7 @@ public class NamedConfigurationPanel extends JBPanel implements ConfigurationApp
 	private NamePanel namePanel;
 	private BaseConfigurationPanel baseConfigurationPanel;
 
-	public NamedConfigurationPanel( File file ) {
+	public NamedConfigurationPanel( File file ) throws IOException {
 		super( new BorderLayout() );
 		this.namePanel = new NamePanel();
 		this.add( namePanel, BorderLayout.NORTH );
@@ -43,7 +44,7 @@ public class NamedConfigurationPanel extends JBPanel implements ConfigurationApp
 		this.add( baseConfigurationPanel, BorderLayout.CENTER );
 	}
 
-	public void updateWorkingDirectory( File workingDirectory ) {
+	public void updateWorkingDirectory( File workingDirectory ) throws IOException {
 		this.baseConfigurationPanel.updateWorkingDirectory( workingDirectory );
 	}
 

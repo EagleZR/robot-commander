@@ -18,10 +18,11 @@ package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBPanel;
-import com.intellij.ui.treeStructure.Tree;
-import org.jdesktop.swingx.treetable.FileSystemModel;
+import markz.robot_commander.plugin.toolbar.tree.TestTree;
+import markz.robot_commander.plugin.toolbar.tree.TestTreeModel;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Mark Zeagler
@@ -33,7 +34,7 @@ public class TestPanel extends JBPanel {
 	private File rootFile;
 	private TestTree testTree;
 
-	public TestPanel( File file ) {
+	public TestPanel( File file ) throws IOException {
 		if ( debugColors ) {
 			this.setBackground( JBColor.RED );
 		}
@@ -44,19 +45,13 @@ public class TestPanel extends JBPanel {
 		// this.setLayout( new BorderLayout() );
 
 		// Initialize components
-		testTree = new TestTree();
+		testTree = new TestTree( file );
 		this.add( testTree );
 	}
 
-	public void updateWorkingDirectory( File workingDirectory ) {
+	public void updateWorkingDirectory( File workingDirectory ) throws IOException {
 		this.rootFile = workingDirectory;
-		FileSystemModel model = (FileSystemModel) this.testTree.getModel();
+		TestTreeModel model = (TestTreeModel) this.testTree.getModel();
 		model.setRoot( workingDirectory );
-	}
-
-	private class TestTree extends Tree {
-		private TestTree() {
-			super( new FileSystemModel( rootFile ) );
-		}
 	}
 }

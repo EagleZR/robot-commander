@@ -17,11 +17,13 @@
 package markz.robot_commander.plugin.toolbar;
 
 import com.intellij.ui.components.JBPanel;
+import com.intellij.ui.components.JBScrollPane;
 import markz.robot_commander.command.CommandFactoryInterface;
 import markz.robot_commander.command.ConfigurationApplicator;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,15 +36,15 @@ public class BaseConfigurationPanel extends JBPanel implements ConfigurationAppl
 	private OptionPanel optionPanel;
 	private TestPanel testPanel;
 
-	public BaseConfigurationPanel( File file ) {
+	public BaseConfigurationPanel( File file ) throws IOException {
 		super( new BorderLayout() );
 		this.optionPanel = new OptionPanel();
 		this.add( this.optionPanel, BorderLayout.NORTH );
 		this.testPanel = new TestPanel( file );
-		this.add( this.testPanel, BorderLayout.CENTER );
+		this.add( new JBScrollPane( this.testPanel ), BorderLayout.CENTER );
 	}
 
-	public void updateWorkingDirectory( File file ) {
+	public void updateWorkingDirectory( File file ) throws IOException {
 		this.testPanel.updateWorkingDirectory( file );
 	}
 

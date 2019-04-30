@@ -17,10 +17,10 @@
 package markz.robot_commander.sifter;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Mark Zeagler
@@ -38,17 +38,22 @@ public class RobotFileSifter {
 
 	public static List<File> getRobotFiles( File workingDirectory ) {
 		List<File> returnList = new LinkedList<>();
-		for ( File child : Objects.requireNonNull( workingDirectory.listFiles() ) ) {
-			if ( child.isDirectory() ) {
-				returnList.addAll( getRobotFiles( child ) );
-			} else {
-				for ( String fileExtension : fileExtensions ) {
-					if ( child.getName().endsWith( "." + fileExtension ) && !IGNORED_FILE_NAMES
+		try {
+			for ( File child : workingDirectory.listFiles() ) {
+				if ( !Files.isSymbolicLink( child.toPath() ) && child.isDirectory() ) {
+					returnList.addAll( getRobotFiles( child ) );
+				} else {
+					for ( String fileExtension : fileExtensions ) {
+						if ( child.getName().endsWith( "." + fileExtension ) && !IGNORED_FILE_NAMES
 							.contains( child.getName() ) ) {
-						returnList.add( child );
+							returnList.add( child );
+						}
 					}
 				}
 			}
+		} catch ( NullPointerException e ) {
+			System.out.println( workingDirectory.getAbsolutePath() );
+			throw e;
 		}
 		return returnList;
 	}

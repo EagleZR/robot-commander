@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -66,12 +67,20 @@ public class RunConfigurationSettingsEditor extends SettingsEditor<RunConfigurat
 		if ( this.settingsPanel == null ) {
 			synchronized ( LOCK ) {
 				if ( this.settingsPanel == null ) {
-					this.settingsPanel = new NamedConfigurationPanel( file );
+					try {
+						this.settingsPanel = new NamedConfigurationPanel( file );
+					} catch ( IOException e ) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 
-		this.settingsPanel.updateWorkingDirectory( file );
+		try {
+			this.settingsPanel.updateWorkingDirectory( file );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
 
 		return settingsPanel;
 	}

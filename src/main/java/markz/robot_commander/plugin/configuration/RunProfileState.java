@@ -122,6 +122,6 @@ public class RunProfileState extends PythonCommandLineState {
 
 	private CommandLinePatcher getCommandPatcher( File file ) {
 		// TODO Validate robot file
-		return gcl -> gcl.setExePath( file.getAbsolutePath() );
+		return gcl -> gcl.addParameters( "-m", "robot" );
 	}
 }

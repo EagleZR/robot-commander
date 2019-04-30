@@ -18,6 +18,7 @@ package markz.robot_commander.plugin.toolbar;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Mark Zeagler
@@ -25,7 +26,7 @@ import java.io.File;
  */
 public class TestPaneTest {
 
-	public static void main( String[] args ) {
+	public static void main( String[] args ) throws IOException {
 		JFrame frame = new JFrame( "TestPaneTest Test" );
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		frame.getContentPane().add( getTestPane() );
@@ -33,7 +34,7 @@ public class TestPaneTest {
 		frame.setVisible( true );
 	}
 
-	private static TestPanel getTestPane() {
+	private static TestPanel getTestPane() throws IOException {
 		return new TestPanel( new File( "" ) );
 	}
 

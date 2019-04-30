@@ -25,6 +25,7 @@ import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -40,7 +41,12 @@ public class ToolWindowFactory implements com.intellij.openapi.wm.ToolWindowFact
 		VirtualFile virtualFile = ModuleRootManager.getInstance( ModuleManager.getInstance( project ).getModules()[0] )
 				.getContentRoots()[0]; // TODO Resolve possible issues due to multiple modules or content roots
 		File file = new File( Objects.requireNonNull( virtualFile.getCanonicalPath() ) );
-		Content content = contentFactory.createContent( ToolWindow.getInstance( file ), "", false );
+		Content content = null;
+		try {
+			content = contentFactory.createContent( ToolWindow.getInstance( file ), "", false );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
 		toolWindow.getContentManager().addContent( content );
 	}
 

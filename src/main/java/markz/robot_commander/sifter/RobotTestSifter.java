@@ -54,7 +54,7 @@ public final class RobotTestSifter {
 	public static List<String> getFileTests( File file ) throws IOException {
 		// Make sure file exists
 		if ( !file.exists() ) {
-			throw new FileNotFoundException( "The given file does not exist" );
+			throw new FileNotFoundException( "The given file does not exist: " + file.getPath() );
 		}
 		// Read file
 		String fileText = new String( Files.readAllBytes( file.toPath() ), StandardCharsets.UTF_8 );
